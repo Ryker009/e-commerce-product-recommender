@@ -4,7 +4,6 @@ import { Product } from "../models/Product.js";
 
 const router = express.Router();
 
-// Record user event (view, cart, purchase)
 router.post("/", async (req, res) => {
   try {
     const { userId, productId, type } = req.body;
@@ -24,7 +23,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Get events for user
 router.get("/:userId", async (req, res) => {
   const events = await UserEvent.find({ userId: req.params.userId }).populate("product");
   res.json(events);

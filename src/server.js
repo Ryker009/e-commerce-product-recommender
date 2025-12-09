@@ -8,27 +8,21 @@ dotenv.config();
 console.log("Loaded GEMINI API KEY:", process.env.GEMINI_API_KEY ? "YES" : "NO");
 
 import cors from "cors";
-
 import { connectDB } from "./config/db.js";
-
 import productRoutes from "./routes/product.routes.js";
 import eventRoutes from "./routes/event.routes.js";
 import recommendRoutes from "./routes/recommend.routes.js";
 import seedRoutes from "./routes/seed.routes.js";
-
-
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// Basic health route
 app.get("/", (_req, res) => {
   res.json({ message: "E-commerce Recommender API is running" });
 });
 
-// API routes
 app.use("/api/products", productRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/recommend", recommendRoutes);

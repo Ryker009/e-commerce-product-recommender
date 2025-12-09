@@ -6,11 +6,9 @@ export const generateExplanation = async (userId, recommendedProducts, userStats
     const geminiKey = process.env.GEMINI_API_KEY;
     if (!geminiKey) throw new Error("Missing GEMINI_API_KEY");
 
-    // create client
+
     const genAI = new GoogleGenerativeAI(geminiKey);
 
-    // Use a supported model id (try gemini-2.5-flash)
-    // If this still errors, try gemini-2.0-flash or other models from the list endpoint
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const productNames = recommendedProducts.map(p => p.name).join(", ");
@@ -25,10 +23,9 @@ ${JSON.stringify(userStats, null, 2)}
 Keep the explanation friendly and simple.
 `;
 
-    // generate content
+
     const result = await model.generateContent(prompt);
 
-    // result.response.text() may vary by SDK versions; handle both
     const text = (result?.response?.text && typeof result.response.text === "function")
       ? result.response.text()
       : (result?.response?.text || result?.text || "");
